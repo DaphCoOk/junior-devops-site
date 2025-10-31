@@ -7,7 +7,6 @@ Jestem Junior DevOps Engineer, zorientowany na praktykę. Mój profil łączy dy
 | Link | Opis |
 | :--- | :--- |
 | Osobista Strona Wizytówka | Zobacz krótką prezentację moich kluczowych kompetencji (Linux, Docker, BASH). |
-| [Pobierz Pełne CV (PDF)](./CV_ILLIA_Ustenko.pdf) | Plik z aktualnym doświadczeniem zawodowym i planem rozwoju w IT. |
 | [Projekt Demonstracyjny (W Budowie)](./junior-devops-nginx-docker-demo) | Zobacz kod mojego projektu CI/CD (Docker, BASH, Nginx), który dowodzi praktycznego zrozumienia narzędzi. |
 
 ---

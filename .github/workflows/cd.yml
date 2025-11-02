@@ -3,8 +3,7 @@ name: Continuous Deployment to Hetzner
 on:
   push:
     branches:
-      
-main
+     - main 
 
 jobs:
   deploy:

@@ -31,16 +31,26 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/junior-devops-site:${{ steps.vars.outputs.tag }}
 
-                  
+   
       - uses: appleboy/ssh-action@v1.0.1
-        with:
+          with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /opt/junior-devops-site
-            export IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/junior-devops-site
-            export IMAGE_TAG=${{ steps.vars.outputs.tag }}
-            docker compose pull
-            docker compose up -d --remove-orphans
-            docker ps
+            
+            echo "
+            version: '3.8'
+            services:
+              web:
+                image: ${{ secrets.DOCKER_USERNAME }}/junior-devops-site:${{ steps.vars.outputs.tag }}
+                ports:
+                  - \"80:80\"
+                restart: always
+              " > docker-compose.yml
+              
+              docker compose pull
+              docker compose up -d --remove-orphans
+              docker ps    
+            

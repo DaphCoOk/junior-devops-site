@@ -38,7 +38,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-          cd /opt/junior-devops-site
+            cd /opt/junior-devops-site
             export IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/junior-devops-site
             export IMAGE_TAG=${{ steps.vars.outputs.tag }}
             docker compose pull

@@ -33,7 +33,7 @@ jobs:
 
    
       - uses: appleboy/ssh-action@v1.0.1
-          with:
+        with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -48,9 +48,9 @@ jobs:
                 ports:
                   - \"80:80\"
                 restart: always
-              " > docker-compose.yml
+            " > docker-compose.yml
               
-              docker compose pull
-              docker compose up -d --remove-orphans
-              docker ps    
+            docker compose pull
+            docker compose up -d --remove-orphans
+            docker ps    
             

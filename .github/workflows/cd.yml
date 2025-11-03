@@ -33,29 +33,7 @@ jobs:
         build-args:
           BUILD_DATE: $(date +%Y-%m-%d\ %H:%M:%S)
           BUILD_ID: ${{ github.run_id }}
-
-   
-      - uses: appleboy/ssh-action@v1.0.1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /opt/junior-devops-site
-            
-            echo "
-            version: '3.8'
-            services:
-              web:
-                image: ${{ secrets.DOCKER_USERNAME }}/junior-devops-site:${{ steps.vars.outputs.tag }}
-                ports:
-                  - \"80:80\"
-                restart: always
-            " > docker-compose.yml
-              
-            docker compose pull
-            docker compose up -d --remove-orphans
-            docker ps    
+  
             
       - uses: appleboy/ssh-action@v1.0.1
         with:
@@ -63,11 +41,11 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # 1. Przejdź do katalogu
+            # 1. Переход в директорию
             cd /opt/junior-devops-site
             
-            # 2. Tworzenie pliku docker-compose.yml przy użyciu nowej konfiguracji HTTPS
-            # (WAŻNE: Nazwa pliku musi odpowiadać nazwie, której będziesz używać podczas compose)
+            # 2. Создание файла docker-compose.yml с использованием нового, HTTPS-конфига
+            # (ВАЖНО: Имя файла должно совпадать с тем, что вы будете использовать в compose)
             echo "
             version: '3.8'
             services:
@@ -93,7 +71,7 @@ jobs:
               web-root:
             " > docker-compose.https.yml
             
-            # 3. Zastosowanie
+            # 3. Развертывание
             docker compose -f docker-compose.https.yml pull
             docker compose -f docker-compose.https.yml up -d --remove-orphans
             CONTAINER_ID=\$(docker compose -f docker-compose.https.yml ps -q web)

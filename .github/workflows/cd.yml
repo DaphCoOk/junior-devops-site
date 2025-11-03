@@ -63,8 +63,11 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # 1. Przejdź do katalogu
             cd /opt/junior-devops-site
             
+            # 2. Tworzenie pliku docker-compose.yml przy użyciu nowej konfiguracji HTTPS
+            # (WAŻNE: Nazwa pliku musi odpowiadać nazwie, której będziesz używać podczas compose)
             echo "
             version: '3.8'
             services:
@@ -90,6 +93,7 @@ jobs:
               web-root:
             " > docker-compose.https.yml
             
+            # 3. Zastosowanie
             docker compose -f docker-compose.https.yml pull
             docker compose -f docker-compose.https.yml up -d --remove-orphans
             CONTAINER_ID=\$(docker compose -f docker-compose.https.yml ps -q web)

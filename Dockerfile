@@ -2,8 +2,8 @@ FROM nginx:alpine
 
 RUN rm /etc/nginx/conf.d/default.conf
 
-COPY nginx.temp.conf /etc/nginx/conf.d/nginx.temp.conf
-COPY nginx.final.conf /etc/nginx/conf.d/nginx.final.conf
+COPY nginx.temp.conf /usr/share/nginx/html/
+COPY nginx.final.conf /usr/share/nginx/html/
 
 COPY . /usr/share/nginx/html/
 

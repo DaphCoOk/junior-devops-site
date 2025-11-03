@@ -30,9 +30,6 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/junior-devops-site:${{ steps.vars.outputs.tag }}
-        build-args:
-          BUILD_DATE: $(date +%Y-%m-%d\ %H:%M:%S)
-          BUILD_ID: ${{ github.run_id }}
 
    
       - uses: appleboy/ssh-action@v1.0.1
@@ -74,4 +71,7 @@ jobs:
             # 3. Развертывание
             docker compose -f docker-compose.https.yml pull
             docker compose -f docker-compose.https.yml up -d --remove-orphans
+            CONTAINER_ID=\$(docker compose -f docker-compose.https.yml ps -q web)
+            docker exec \$CONTAINER_ID cp /usr/share/nginx/html/nginx.final.conf /etc/nginx/conf.d/default.conf
+            docker compose -f docker-compose.https.yml restart web
             docker ps            

@@ -31,9 +31,9 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/junior-devops-site:${{ steps.vars.outputs.tag }}
         build-args:
-            BUILD_DATE: $(date +%Y-%m-%d\ %H:%M:%S)
-            BUILD_ID: ${{ github.run_id }}
-        
+          BUILD_DATE: $(date +%Y-%m-%d\ %H:%M:%S)
+          BUILD_ID: ${{ github.run_id }}
+
    
       - uses: appleboy/ssh-action@v1.0.1
         with:

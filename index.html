@@ -1,69 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="keywords" content="">
-    <meta name="description" content="Illia Ustenko ">
-    <meta name="author" content="Illia Ustenko">
+    <meta name="keywords" content="DevOps, CI/CD, Docker, Linux, Certbot, Nginx, Infrastructure as Code">
+    <meta name="description" content="Ilia Ustenko - Junior DevOps Engineer z praktycznym doświadczeniem w automatyzacji i utrzymaniu infrastruktury produkcyjnej.">
+    <meta name="author" content="Ilia Ustenko">
 
-   
+    
     <link href="./normalize.css" rel="stylesheet" />
     <link href="./style.css" rel="stylesheet" />
-    <title>Illia Ustenko Junior DevOps Engineer</title>
+    <title>Ilia Ustenko | Junior DevOps Engineer</title>
   </head>
 
   <body>
     <header class="header">
       <img src="me3.png" alt="avatar" class="header__avatar" />
-      <h1 class="header__title">Illia Ustenko</h1>
-      <h3 class="header__subtitle">Junior DevOps Engineer</h3>
+      <h1 class="header__title">Ilia Ustenko</h1>
+      <h3 class="header__subtitle">Junior DevOps & Infrastructure Engineer</h3>
     </header>
 
     <main>
 
       <section class="links">
-        <h2 class="links__header">O mnie</h2>
+        <h2 class="links__header">O Mnie</h2>
         <ul class="links__container">
           <li class="links__link">
-            <p class="links__title">Junior DevOps Engineer </p>
-			<a class="linsk__link" >Z praktycznym doświadczeniem w utrzymaniu stabilności systemów.</a>
+            <p class="links__title">Junior DevOps Engineer</p>
+            <a class="linsk__link" >Z praktycznym doświadczeniem w utrzymaniu stabilności i automatyzacji wdrażania systemów w środowisku chmurowym.</a>
+          </li>
+          <li class="links__link">
+            <p class="links__title">Pełny Projekt CI/CD (Demonstracja)</p>
+            <a class="linsk__link" href="https://github.com/DaphCoOk/junior-devops-site" target="_blank">Ten site działa w pełnym cyklu CI/CD (Code-to-Production) przy użyciu GitHub Actions. Kliknij, aby zobaczyć kod.</a>
+          </li>
+        </ul>
+      </section>
+      
+      <section class="links">
+        <h2 class="links__header">Status Wdrożenia (Dowód CI/CD)</h2>
+        <ul class="links__container">
+          <li class="links__link">
+            <p class="links__title">Data Kompilacji Obrazu Docker:</p>
+            <a class="linsk__link" >$$BUILD_DATE$$</a>
+          </li>
+          <li class="links__link">
+            <p class="links__title">ID Ostatniego Uruchomienia CI/CD:</p>
+            <a class="linsk__link" >$$BUILD_ID$$</a>
           </li>
         </ul>
       </section>
 
       <section class="links">
-        <h2 class="links__header">Zdolnośći</h2>
+        <h2 class="links__header">Kluczowe Zdolności</h2>
         <ul class="links__container">
           <li class="links__link">
-            <p class="links__title">LINUX (OS)</p>
-            <a class="linsk__link" >Potrafię konfigurować i administrować środowisko Ubuntu Server, wykorzystując konsolę (CLI) do stabilnego utrzymania.</a>
+            <p class="links__title">LINUX (Administracja)</p>
+            <a class="linsk__link" >Administracja i utrzymanie serwerów Linux (Ubuntu/Debian). Doświadczenie w pracy w CLI oraz diagnostyce systemów w środowisku VPS.</a>
           </li>
           <li class="links__link">
-            <p class="links__title">DOCKER</p>
-            <a class="linsk__link" >Znam praktyczne zastosowanie Dockera do izolacji środowiska i szybkiego wdrożenia aplikacji, minimalizując konflikty zależności.</a>
+            <p class="links__title">DOCKER & Konteneryzacja</p>
+            <a class="linsk__link" >Praktyczne wdrożenia z użyciem Docker i Docker Compose. Budowanie obrazów, zarządzanie nimi w Registry i konfiguracja Współdzielonych Wolumenów (Volumes).</a>
           </li>
           <li class="links__link">
-            <p class="links__title">BASH & CI/CD</p>
-            <a class="linsk__link" >Piszę skrypty BASH do automatyzacji powtarzalnych zadań oraz rozumiem logikę ciągłej integracji i dostarczania (CI/CD).</a>
+            <p class="links__title">CI/CD & Automatyzacja</p>
+            <a class="linsk__link" >Skonfigurowany pipeline CI/CD (GitHub Actions, Bash scripting) oraz znajomość logiki Infrastructure as Code (IaC) w plikach YAML.</a>
           </li>
-		  <li class="links__link">
+          <li class="links__link">
+            <p class="links__title">SECURITY & Nginx</p>
+            <a class="linsk__link" >Wdrożenie SSL/TLS (HTTPS) za pomocą Certbot z automatycznym odnawianiem. Konfiguracja Nginx Reverse Proxy i zarządzanie ruchem sieciowym.</a>
+          </li>
+          <li class="links__link">
+            <p class="links__title">Troubleshooting (Diagnostyka)</p>
+            <a class="linsk__link" >Skuteczna analiza logów, diagnozowanie awarii w czasie rzeczywistym oraz rozwiązywanie problemów sieciowych (DNS, `404`, `Connection refused`).</a>
+          </li>
+          <li class="links__link">
             <p class="links__title">GIT</p>
-            <a class="linsk__link" >PWykorzystuję system Git i platformę GitHub do efektywnego zarządzania kodem projektu i współpracy.</a>
-          </li>
-		  <li class="links__link">
-            <p class="links__title">Troubleshooting</p>
-            <a class="linsk__link" >Moja kluczowa kompetencja to skuteczna analiza logów i diagnozowanie awarii w czasie rzeczywistym, co gwarantuje stabilność systemu.</a>
+            <a class="linsk__link" >Wykorzystanie Git i GitHub do zarządzania kodem, włączając GitHub Secrets dla bezpiecznego wdrożenia.</a>
           </li>
         </ul>
       </section>
+      
+      <section class="links">
+        <h2 class="links__header">Wyzwania i Rozwiązania</h2>
+        <ul class="links__container">
+          <li class="links__link">
+            <p class="links__title">Rozwiązanie Błędów 404/SSL</p>
+            <a class="linsk__link" >Diagnoza i naprawa błędu `404 Not Found` w Certbot Challenge poprzez synchronizację niepoprawnie zdefiniowanych Współdzielonych Wolumenów w Docker Compose.</a>
+          </li>
+        </ul>
+      </section>
+      
     </main>
 
     <footer>
-      <button type = "button" class="button-link" href=""> Kontakt </button>
+      <button type="button" class="button-link" onclick="window.location.href='mailto:twoj.email@przyklad.com';">Kontakt</button>
     </footer>
     <script type="text/javascript" src="js.js"></script>
 

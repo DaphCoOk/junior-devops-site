@@ -17,54 +17,33 @@ jobs:
         run: |
           TAG_SHA=$(echo $GITHUB_SHA | cut -c1-8)
           echo "tag=$TAG_SHA" >> $GITHUB_OUTPUT
-
-              
+          
       - uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-              
       - uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/junior-devops-site:${{ steps.vars.outputs.tag }}
-
-   
+          build-args:
+            BUILD_DATE: $(date +%Y-%m-%d\ %H:%M:%S)
+            BUILD_ID: ${{ github.run_id }}
+    
+      
       - uses: appleboy/ssh-action@v1.0.1
+        name: Deploy and Configure HTTPS
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            
             cd /opt/junior-devops-site
             
-            echo "
-            version: '3.8'
-            services:
-              web:
-                image: ${{ secrets.DOCKER_USERNAME }}/junior-devops-site:${{ steps.vars.outputs.tag }}
-                ports:
-                  - \"80:80\"
-                restart: always
-            " > docker-compose.yml
-              
-            docker compose pull
-            docker compose up -d --remove-orphans
-            docker ps    
             
-      - uses: appleboy/ssh-action@v1.0.1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            # 1. Переход в директорию
-            cd /opt/junior-devops-site
-            
-            # 2. Создание файла docker-compose.yml с использованием нового, HTTPS-конфига
-            # (ВАЖНО: Имя файла должно совпадать с тем, что вы будете использовать в compose)
             echo "
             version: '3.8'
             services:
@@ -75,22 +54,28 @@ jobs:
                   - \"443:443\"
                 volumes:
                   - certs:/etc/letsencrypt
-                  - web-root:/usr/share/nginx/html
+                  - web-root:/var/www/html  # <-- ИСПРАВЛЕННЫЙ ПУТЬ
                 restart: unless-stopped
-              
+                
               certbot:
                 image: certbot/certbot
                 volumes:
                   - certs:/etc/letsencrypt
                   - web-root:/var/www/html
-                entrypoint: \"/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $!; done;'\"
+                entrypoint: \"/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait \$!; done;'\"
                 
             volumes:
               certs:
               web-root:
             " > docker-compose.https.yml
             
-            # 3. Развертывание
+            
             docker compose -f docker-compose.https.yml pull
             docker compose -f docker-compose.https.yml up -d --remove-orphans
-            docker ps            
+            
+            
+            CONTAINER_ID=\$(docker compose -f docker-compose.https.yml ps -q web)
+            docker exec \$CONTAINER_ID cp /usr/share/nginx/html/nginx.final.conf /etc/nginx/conf.d/default.conf
+            docker compose -f docker-compose.https.yml restart web
+            
+            docker ps

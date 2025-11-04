@@ -19,7 +19,7 @@ body {
   border-radius: 50%;
   display: block;
   margin: 0 auto;
-  border: 4px solid transparent; /* по умолчанию без обводки */
+  border: 4px solid transparent; 
   transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -33,7 +33,7 @@ body {
   font-size: 32px;
   line-height: 1.2;
   font-family: "Helvetica Neue";
-  width: 600px;            /* выравниваем по контейнеру */
+  width: 600px;           
   margin-left: auto;
   margin-right: auto;
   text-align: left;
@@ -45,7 +45,7 @@ body {
   line-height: 1.4;
   margin: 0;
   font-weight: normal;
-  width: 600px;            /* та же ширина */
+  width: 600px;           
   margin-left: auto;
   margin-right: auto;
   text-align: left;
@@ -78,7 +78,7 @@ body {
   flex-grow: 0;
   box-sizing: border-box;
   margin: 0 auto;
-  width: 600px; /* например, фиксированная ширина */
+  width: 600px; 
 }
 
 .links__link,
@@ -102,7 +102,7 @@ body {
 }
 
 .linsk__link {
-  color: #4682B4; /* базовый сиреневый */
+  color: #4682B4; 
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -135,25 +135,37 @@ footer {
   text-decoration: none;
 }
 
+img, video, iframe, picture {
+    max-width: 100%;
+    height: auto;
+}
+
+
 @media (max-width: 600px) {
     body {
-        padding: 10px; /* Уменьшаем отступы по краям */
+        padding: 10px;
+    }
+    
+    
+    .container {
+        width: 100%;
+        padding: 15px;
+        box-shadow: none; 
     }
 
     h1 {
-        font-size: 1.5em; /* Уменьшаем основной заголовок */
+        font-size: 1.8em;
+    }
+    
+    
+    .profile-img {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto 20px auto; 
     }
 
-    .container, .status-box {
-        width: 95%; /* Растягиваем почти на всю ширину */
-        margin-left: auto;
-        margin-right: auto;
-        padding: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Сохраняем тень */
-    }
-
-    /* Уменьшаем шрифт для отображения статуса */
-    .status-text, .metadata p {
+    
+    .status-text, .metadata p, .skills-list li {
         font-size: 0.9em;
     }
 }

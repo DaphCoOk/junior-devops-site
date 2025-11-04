@@ -135,37 +135,25 @@ footer {
   text-decoration: none;
 }
 
-img, video, iframe, picture {
-    max-width: 100%;
-    height: auto;
-}
-
-
 @media (max-width: 600px) {
     body {
-        padding: 10px;
-    }
-    
-    
-    .container {
-        width: 100%;
-        padding: 15px;
-        box-shadow: none; 
+        padding: 10px; 
     }
 
     h1 {
-        font-size: 1.8em;
-    }
-    
-    
-    .profile-img {
-        width: 150px;
-        height: 150px;
-        margin: 0 auto 20px auto; 
+        font-size: 1.5em; 
     }
 
-    
-    .status-text, .metadata p, .skills-list li {
+    .container, .status-box {
+        width: 95%; 
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    }
+
+
+    .status-text, .metadata p {
         font-size: 0.9em;
     }
 }

@@ -73,7 +73,11 @@ jobs:
             # 3. Развертывание
             docker compose -f docker-compose.https.yml pull
             docker compose -f docker-compose.https.yml up -d --remove-orphans
-            sleep
+            docker compose -f docker-compose.https.yml run --rm certbot certonly \
+            --webroot -w /var/www/html \
+            -d ustenkoillia.gleeze.com -d www.ustenkoillia.gleeze.com \
+            --email ustenkoillia29@gmail.com \
+            --agree-tos --non-interactive --force-renewal
             CONTAINER_ID=$(docker compose -f docker-compose.https.yml ps -q web)
             docker exec \$CONTAINER_ID cp /usr/share/nginx/html/nginx.final.conf /etc/nginx/conf.d/default.conf
             docker compose -f docker-compose.https.yml restart web

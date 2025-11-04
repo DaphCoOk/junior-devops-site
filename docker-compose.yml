@@ -16,7 +16,7 @@ services:
       # Общий том для хранения ключей Certbot
       - ./certs:/etc/letsencrypt
     # Используем временный конфиг для первого запуска (чтобы Nginx не упал без ключей)
-    command: /bin/sh -c "cp /usr/share/nginx/html/nginx.temp.conf /etc/nginx/conf.d/default.conf && while :; do sleep 6h & wait $${!}; done"
+    command: /bin/sh -c "cp /usr/share/nginx/html/nginx.temp.conf /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
 
   certbot:
     image: certbot/certbot

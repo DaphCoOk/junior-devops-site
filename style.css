@@ -134,3 +134,26 @@ footer {
   color: #ffffff;
   text-decoration: none;
 }
+
+@media (max-width: 600px) {
+    body {
+        padding: 10px; /* Уменьшаем отступы по краям */
+    }
+
+    h1 {
+        font-size: 1.5em; /* Уменьшаем основной заголовок */
+    }
+
+    .container, .status-box {
+        width: 95%; /* Растягиваем почти на всю ширину */
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Сохраняем тень */
+    }
+
+    /* Уменьшаем шрифт для отображения статуса */
+    .status-text, .metadata p {
+        font-size: 0.9em;
+    }
+}

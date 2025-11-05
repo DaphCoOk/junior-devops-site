@@ -19,7 +19,7 @@ body {
 
 .header {
   margin: 40px 0;
-  width: 90%; 
+  width: 100%; 
   max-width: var(--max-width);
   display: flex; 
   flex-direction: column;
@@ -149,23 +149,30 @@ footer {
 
 
 @media (max-width: 650px) {
-  /
-  .links__link {
-    flex-direction: column; 
-    gap: 5px; 
-    padding-bottom: 15px;
-  }
-  
-  .links__title {
-    width: auto; 
-  }
-  
-  .links__container {
-    padding: 15px; 
-  }
+   
+    .header {
+        padding: 0 10px; 
+    }
 
-  .header__avatar {
-    width: 250px;
-    height: 250px;
-  }
+    /
+    .header__avatar {
+        width: 85vw; 
+        height: 85vw; 
+        max-width: 250px;
+        max-height: 250px;
+    }
+
+    .links__link {
+        flex-direction: column; 
+        gap: 5px; 
+        padding-bottom: 15px;
+    }
+
+    .links__title {
+        width: auto; 
+    }
+
+    .links__container {
+        padding: 15px; 
+    }
 }

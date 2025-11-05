@@ -26,58 +26,40 @@
     <main>
 
       <section class="links">
-        <h2 class="links__header">O Mnie</h2>
-        <ul class="links__container">
-          <li class="links__link">
-            <p class="links__title">Junior DevOps Engineer</p>
-            <a class="linsk__link" >Z praktycznym doświadczeniem w utrzymaniu stabilności i automatyzacji wdrażania systemów w środowisku chmurowym.</a>
-          </li>
-          <li class="links__link">
-            <p class="links__title">Pełny Projekt CI/CD (Demonstracja)</p>
-            <a class="linsk__link" href="https://github.com/DaphCoOk/junior-devops-site" target="_blank">Ten site działa w pełnym cyklu CI/CD (Code-to-Production) przy użyciu GitHub Actions. Kliknij, aby zobaczyć kod.</a>
-          </li>
-        </ul>
-      </section>
+	  <h2 class="links__header">Architektura i Proces CI/CD</h2>
+	   <ul class="links__container">
+		<li class="links__link">
+		  <p class="links__title">Architektura</p>
+		  <a class="linsk__link">Projekt hostowany na VPS (Hetzner). Wykorzystuje Docker Compose dla zarządzania kontenerami: Nginx (serwer WWW/Reverse Proxy) i Certbot (SSL/TLS).</a>
+		</li>
+		<li class="links__link">
+		  <p class="links__title">CI/CD Pipeline</p>
+		  <a class="linsk__link" href="https://github.com/DaphCoOk/junior-devops-site/actions" target="_blank">W pełni zautomatyzowany cykl CI/CD (GitHub Actions): Build, Push do Docker Registry, SSH do VPS, Pull i Deployment. (Link do Action Logs)</a>
+		</li>
+		<li class="links__link">
+		  <p class="links__title">Autoodnawianie SSL</p>
+		  <a class="linsk__link">Certyfikaty Let's Encrypt są automatycznie odnawiane przez Cronjob na VPS, który uruchamia `docker-compose run certbot renew` i przeładowuje Nginx.</a>
+		</li>
+	   </ul>
+	  </section>
       
       <section class="links">
-        <h2 class="links__header">Kluczowe Zdolności</h2>
-        <ul class="links__container">
-          <li class="links__link">
-            <p class="links__title">LINUX (Administracja)</p>
-            <a class="linsk__link" >Administracja i utrzymanie serwerów Linux (Ubuntu/Debian). Doświadczenie w pracy w CLI oraz diagnostyce systemów w środowisku VPS.</a>
-          </li>
-          <li class="links__link">
-            <p class="links__title">DOCKER & Konteneryzacja</p>
-            <a class="linsk__link" >Praktyczne wdrożenia z użyciem Docker i Docker Compose. Budowanie obrazów, zarządzanie nimi w Registry i konfiguracja Współdzielonych Wolumenów (Volumes).</a>
-          </li>
-          <li class="links__link">
-            <p class="links__title">CI/CD & Automatyzacja</p>
-            <a class="linsk__link" >Skonfigurowany pipeline CI/CD (GitHub Actions, Bash scripting) oraz znajomość logiki Infrastructure as Code (IaC) w plikach YAML.</a>
-          </li>
-          <li class="links__link">
-            <p class="links__title">SECURITY & Nginx</p>
-            <a class="linsk__link" >Wdrożenie SSL/TLS (HTTPS) za pomocą Certbot z automatycznym odnawianiem. Konfiguracja Nginx Reverse Proxy i zarządzanie ruchem sieciowym.</a>
-          </li>
-          <li class="links__link">
-            <p class="links__title">Troubleshooting (Diagnostyka)</p>
-            <a class="linsk__link" >Skuteczna analiza logów, diagnozowanie awarii w czasie rzeczywistym oraz rozwiązywanie problemów sieciowych (DNS, `404`, `Connection refused`).</a>
-          </li>
-          <li class="links__link">
-            <p class="links__title">GIT</p>
-            <a class="linsk__link" >Wykorzystanie Git i GitHub do zarządzania kodem, włączając GitHub Secrets dla bezpiecznego wdrożenia.</a>
-          </li>
-        </ul>
-      </section>
-      
-      <section class="links">
-        <h2 class="links__header">Wyzwania i Rozwiązania</h2>
-        <ul class="links__container">
-          <li class="links__link">
-            <p class="links__title">Rozwiązanie Błędów 404/SSL</p>
-            <a class="linsk__link" >Diagnoza i naprawa błędu `404 Not Found` w Certbot Challenge poprzez synchronizację niepoprawnie zdefiniowanych Współdzielonych Wolumenów w Docker Compose.</a>
-          </li>
-        </ul>
-      </section>
+	  <h2 class="links__header">Wyzwania i Rozwiązania</h2>
+	   <ul class="links__container">
+		<li class="links__link">
+		  <p class="links__title">Błąd 404/SSL</p>
+		  <a class="linsk__link">Naprawa błędu `404` (Certbot Challenge) przez synchronizację konfiguracji Volumes w Docker Compose.</a>
+		</li>
+		<li class="links__link">
+		  <p class="links__title">Błąd Nginx (Case-Sensitivity)</p>
+		  <a class="linsk__link">Diagnoza błędu `cannot load certificate` spowodowanego różnicą w rejestrze liter (`Ustenko.mywire.org` vs `ustenko.mywire.org`). Naprawiono w CI/CD Pipeline.</a>
+		</li>
+		<li class="links__link">
+		  <p class="links__title">Automatyzacja Deploy</p>
+		  <a class="linsk__link">Implementacja `docker cp` w skrypcie deploy CI/CD, aby prawidłowo przenosić konfiguracyjne pliki z hosta do kontenera.</a>
+		</li>
+	   </ul>
+	  </section>
       
     </main>
 

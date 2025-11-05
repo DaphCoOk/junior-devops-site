@@ -1,26 +1,35 @@
 version: '3.8'
 
+# Opis usług (serwera WWW i Certbota)
 services:
   web:
-    # Используем Ваш существующий Dockerfile
+    # Użycie lokalnego Dockerfile do zbudowania obrazu Nginx z treścią strony
     build: . 
+    # Nazwa obrazu do przechowywania w rejestrze
     image: junior-devops-site:latest
     container_name: junior-devops-site-web-1
+    # Zapewnienie automatycznego restartu kontenera w razie awarii
     restart: always
     ports:
+      # Mapowanie portu HTTP (80) i HTTPS (443) z hosta na kontener
       - "80:80"
       - "443:443"
     volumes:
-      # Общий том для webroot и Certbot challenge
+      # Tom wspólny dla plików strony (webroot) i plików challenge Certbota (.well-known/acme-challenge)
       - ./html:/var/www/html
-      # Общий том для хранения ключей Certbot
+      # Tom wspólny dla przechowywania kluczy i certyfikatów SSL/TLS
       - ./certs:/etc/letsencrypt
-    # Используем временный конфиг для первого запуска (чтобы Nginx не упал без ключей)
+    # Komenda startowa:
+    # 1. Kopiuje tymczasowy plik konfiguracyjny Nginx (bez SSL) w przypadku braku certyfikatów przy pierwszym uruchomieniu.
+    # 2. Uruchamia Nginx.
     command: /bin/sh -c "cp /usr/share/nginx/html/nginx.temp.conf /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
 
   certbot:
+    # Użycie oficjalnego obrazu Certbota do zarządzania certyfikatami
     image: certbot/certbot
     container_name: junior-devops-site-certbot-1
     volumes:
+      # Tom wspólny z 'web' (webroot) - konieczny do weryfikacji domen przez Certbota
       - ./html:/var/www/html
+      # Tom wspólny z 'web' (certs) - konieczny do zapisu i odczytu kluczy/certyfikatów
       - ./certs:/etc/letsencrypt

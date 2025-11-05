@@ -1,34 +1,36 @@
+/* ==================================================== */
+/* ZASADY OGÓLNE */
+/* ==================================================== */
+
 *, *::before, *::after {
-  box-sizing: border-box;
+  box-sizing: border-box; /* Ułatwia zarządzanie rozmiarami elementów (CSS Box Model) */
 }
 
-:root {
-  --max-width: 600px; 
-}
+/* ==================================================== */
+/* 1. STYLI BAZOWE (Mobile-First: dla szerokości <= 430px) */
+/* Te style są domyślne dla wszystkich urządzeń mobilnych */
+/* ==================================================== */
 
 body {
   font-family: "Helvetica";
   background-color: #f5f5f5;
   color: #000000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; 
-  padding: 10px; 
+  display: block; /* Ustawienie domyślne, bez Flexboxa */
+  margin: 0; 
+  padding: 10px;
 }
 
 .header {
-  margin: 40px 0;
-  width: 100%; 
-  max-width: var(--max-width);
-  display: flex; 
+  margin: 20px 0; /* Mniejszy margines na urządzeniach mobilnych */
+  width: 100%;
+  display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center; /* Wyśrodkowanie elementów wewnątrz header na mobilnym */
 }
 
 .header__avatar {
-  width: 350px;
-  height: 350px;
+  width: 250px; 
+  height: 250px;
   object-fit: cover;
   border-radius: 50%;
   display: block;
@@ -44,12 +46,11 @@ body {
 
 .header__title {
   margin: 30px 0 10px 0;
-  font-size: 32px;
+  font-size: 28px; 
   line-height: 1.2;
   font-family: "Helvetica Neue";
-  max-width: var(--max-width);
   width: 100%;
-  text-align: center; 
+  text-align: center;
 }
 
 .header__subtitle {
@@ -58,24 +59,21 @@ body {
   line-height: 1.4;
   margin: 0;
   font-weight: normal;
-  max-width: var(--max-width);
   width: 100%;
-  text-align: center; 
+  text-align: center;
 }
 
 .links {
-  max-width: var(--max-width); 
-  width: 100%; 
-  margin: 0 auto 40px;
-  padding: 0 5%; 
+  width: 100%;
+  margin: 0 auto 20px;
+  padding: 0 5px;
 }
 
 .links__header {
-  max-width: var(--max-width); 
-  width: 100%; 
+  width: 100%;
   margin: 0 auto 15px;
   font-family: "Helvetica Neue";
-  font-size: 24px;
+  font-size: 20px;
   line-height: 1.4;
 }
 
@@ -86,13 +84,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 20px 20px 10px;
+  padding: 15px 15px 5px;
   gap: 10px;
-  flex: none;
-  order: 1;
   flex-grow: 0;
   margin: 0 auto;
-  width: 100%; 
+  width: 100%;
 }
 
 .links__link,
@@ -103,10 +99,9 @@ body {
 
 .links__link {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  flex-direction: column; /* Ustawienie linków wertykalnie na mobilnym */
+  gap: 5px; 
   padding: 0px 0px 10px;
-  gap: 30px;
   border-bottom: 1px solid #dadada;
   width: 100%;
 }
@@ -116,7 +111,7 @@ body {
 }
 
 .linsk__link {
-  color: #4682B4; 
+  color: #4682B4;
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -124,11 +119,10 @@ body {
 .links__title {
   margin: 0;
   min-width: 100px;
-  
 }
 
 footer {
-  margin: 0 0 40px 0;
+  margin: 0 0 20px 0;
 }
 
 .button-link {
@@ -138,41 +132,69 @@ footer {
   justify-content: center;
   align-items: center;
   padding: 10px;
-  width: 350px;
+  width: 100%; /* Pełna szerokość na mobilnym */
+  max-width: 300px; 
   background: #4682B4;
   border-radius: 20px;
   font-size: 14px;
   line-height: 1.4;
   color: #ffffff;
   text-decoration: none;
+  margin: 0 auto;
 }
 
-
-@media (max-width: 650px) {
-   
-    .header {
-        padding: 0 10px; 
+/* ==================================================== */
+/* 2. MEDIA QUERY (min-width: 431px) - STYLI DESKTOP/TABLET */
+/* Te style nadpisują domyślne (mobilne) i centrują treść */
+/* ==================================================== */
+@media (min-width: 431px) {
+    
+    body {
+        /* Używamy flexbox do wyśrodkowania całego contentu */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
-    /
+    /* Główny kontener wrapper (Centrowanie i maksymalna szerokość) */
+    .wrapper { 
+        margin: 40px auto;
+        max-width: 600px; /* Ograniczenie szerokości na desktopie */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 40px; /* Większy padding na desktopie */
+    }
+
+    /* Przywracamy większe marginesy i rozmiary */
+    .header {
+        margin: 40px 0; 
+    }
+
+    .links {
+        margin: 0 auto 40px; 
+    }
+
     .header__avatar {
-        width: 85vw; 
-        height: 85vw; 
-        max-width: 250px;
-        max-height: 250px;
+        width: 350px;
+        height: 350px;
+    }
+    
+    .header__title {
+        font-size: 32px;
+    }
+    
+    .links__header {
+        font-size: 24px;
     }
 
     .links__link {
-        flex-direction: column; 
-        gap: 5px; 
-        padding-bottom: 15px;
+        flex-direction: row; /* Zmieniamy na układ horyzontalny na desktopie */
+        gap: 30px;
     }
-
-    .links__title {
-        width: auto; 
-    }
-
-    .links__container {
-        padding: 15px; 
+    
+    .button-link {
+        width: 350px; /* Większa szerokość przycisku */
     }
 }

@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
     <meta name="keywords" content="DevOps, CI/CD, Docker, Linux, Certbot, Nginx, Infrastructure as Code">
     <meta name="description" content="ILLIA Ustenko - Junior DevOps Engineer z praktycznym doświadczeniem w automatyzacji i utrzymaniu infrastruktury produkcyjnej.">
@@ -17,56 +17,56 @@
   </head>
 
   <body>
-    <header class="header">
-      <img src="me3.png" alt="avatar" class="header__avatar" />
-      <h1 class="header__title">ILLIA Ustenko</h1>
-      <h3 class="header__subtitle">Junior DevOps & Infrastructure Engineer</h3>
-    </header>
+    <div class="wrapper">
+        <header class="header">
+          <img src="me3.png" alt="avatar" class="header__avatar" />
+          <h1 class="header__title">ILLIA Ustenko</h1>
+          <h3 class="header__subtitle">Junior DevOps & Infrastructure Engineer</h3>
+        </header>
 
-    <main>
+        <main>
+            
+            <section class="links">
+                <h2 class="links__header">Architektura i Proces CI/CD</h2>
+                <ul class="links__container">
+                    <li class="links__link">
+                        <p class="links__title">Hosting i Architektura</p>
+                        <a class="linsk__link">Projekt hostowany na VPS (Hetzner). Wykorzystuje Docker Compose dla zarządzania kontenerami: Nginx (serwer WWW/Reverse Proxy) i Certbot (SSL/TLS).</a>
+                    </li>
+                    <li class="links__link">
+                        <p class="links__title">CI/CD Pipeline</p>
+                        <a class="linsk__link" href="https://github.com/DaphCoOk/junior-devops-site/actions" target="_blank">W pełni zautomatyzowany cykl CI/CD (GitHub Actions): Build, Push do Docker Registry, SSH do VPS, Pull i Deployment. (Link do Action Logs)</a>
+                    </li>
+                    <li class="links__link">
+                        <p class="links__title">Autoodnawianie SSL</p>
+                        <a class="linsk__link">Certyfikaty Let's Encrypt są automatycznie odnawiane przez Cronjob na VPS, który cyklicznie uruchamia `docker-compose run certbot renew` i przeładowuje Nginx.</a>
+                    </li>
+                </ul>
+            </section>
+            
+            <section class="links">
+                <h2 class="links__header">Wyzwania i Rozwiązania (DevOps)</h2>
+                <ul class="links__container">
+                    <li class="links__link">
+                        <p class="links__title">Diagnoza Sieci</p>
+                        <a class="linsk__link">Rozwiązanie problemu niedostępności serwisu pomimo statusu `Up` w Docker, poprzez weryfikację reguł Firewall i konfiguracji portów (443/80) na poziomie VPS.</a>
+                    </li>
+                    <li class="links__link">
+                        <p class="links__title">SSL Management</p>
+                        <a class="linsk__link">Wdrożenie mechanizmu backupu i synchronizacji Volumes dla kluczy SSL oraz naprawa błędu `cannot load certificate` (różnica w rejestrze liter w zmiennych).</a>
+                    </li>
+                    <li class="links__link">
+                        <p class="links__title">Automatyzacja Deploy</p>
+                        <a class="linsk__link">Implementacja `docker cp` i użycie SSH Keys w skrypcie deploy CI/CD, aby prawidłowo przenosić i zabezpieczać pliki konfiguracyjne.</a>
+                    </li>
+                </ul>
+            </section>
+            
+        </main>
 
-      <section class="links">
-	  <h2 class="links__header">Architektura i Proces CI/CD</h2>
-	   <ul class="links__container">
-		<li class="links__link">
-		  <p class="links__title">Architektura</p>
-		  <a class="linsk__link">Projekt hostowany na VPS (Hetzner). Wykorzystuje Docker Compose dla zarządzania kontenerami: Nginx (serwer WWW/Reverse Proxy) i Certbot (SSL/TLS).</a>
-		</li>
-		<li class="links__link">
-		  <p class="links__title">CI/CD Pipeline</p>
-		  <a class="linsk__link" href="https://github.com/DaphCoOk/junior-devops-site/actions" target="_blank">W pełni zautomatyzowany cykl CI/CD (GitHub Actions): Build, Push do Docker Registry, SSH do VPS, Pull i Deployment. (Link do Action Logs)</a>
-		</li>
-		<li class="links__link">
-		  <p class="links__title">Autoodnawianie SSL</p>
-		  <a class="linsk__link">Certyfikaty Let's Encrypt są automatycznie odnawiane przez Cronjob na VPS, który uruchamia `docker-compose run certbot renew` i przeładowuje Nginx.</a>
-		</li>
-	   </ul>
-	  </section>
-      
-      <section class="links">
-	  <h2 class="links__header">Wyzwania i Rozwiązania</h2>
-	   <ul class="links__container">
-		<li class="links__link">
-		  <p class="links__title">Błąd 404/SSL</p>
-		  <a class="linsk__link">Naprawa błędu `404` (Certbot Challenge) przez synchronizację konfiguracji Volumes w Docker Compose.</a>
-		</li>
-		<li class="links__link">
-		  <p class="links__title">Błąd Nginx (Case-Sensitivity)</p>
-		  <a class="linsk__link">Diagnoza błędu `cannot load certificate` spowodowanego różnicą w rejestrze liter (`Ustenko.mywire.org` vs `ustenko.mywire.org`). Naprawiono w CI/CD Pipeline.</a>
-		</li>
-		<li class="links__link">
-		  <p class="links__title">Automatyzacja Deploy</p>
-		  <a class="linsk__link">Implementacja `docker cp` w skrypcie deploy CI/CD, aby prawidłowo przenosić konfiguracyjne pliki z hosta do kontenera.</a>
-		</li>
-	   </ul>
-	  </section>
-      
-    </main>
-
-    <footer>
-      <button type="button" class="button-link" onclick="window.location.href='mailto:twoj.email@przyklad.com';">Kontakt</button>
-    </footer>
-    <script type="text/javascript" src="js.js"></script>
-
-  </body>
+        <footer>
+            <button type="button" class="button-link" onclick="window.location.href='mailto:twoj.email@przyklad.com';">Kontakt</button>
+        </footer>
+        <script type="text/javascript" src="js.js"></script>
+    </div> </body>
 </html>

@@ -1,50 +1,64 @@
-name: Continuous Deployment to Hetzner
+# Nazwa całego procesu workflow, widoczna w GitHub Actions
+name: Ciągłe Wdrażanie (Continuous Deployment) na Hetzner
 
+# Definicja zdarzenia, które wyzwala ten proces
 on:
   push:
+    # Proces uruchamiany tylko po pomyślnym pushu na gałąź 'main'
     branches:
       - main
 
+# Główna sekcja zadań (jobs)
 jobs:
   deploy:
+    # Określa środowisko, na którym zadanie ma zostać uruchomione
     runs-on: ubuntu-latest
 
     steps:
       
+      # 1. Krok: Weryfikacja kodu (Checkout)
       - uses: actions/checkout@v4
-        
+      
+      # 2. Krok: Definicja zmiennych (Tagowanie obrazu)
       - id: vars
         run: |
+          # Pobranie pierwszych 8 znaków SHA commita do użycia jako unikalny tag obrazu (versioning)
           TAG_SHA=$(echo $GITHUB_SHA | cut -c1-8)
           echo "tag=$TAG_SHA" >> $GITHUB_OUTPUT
-
-              
+      
+      # 3. Krok: Logowanie do Docker Registry
       - uses: docker/login-action@v3
         with:
+          # Dane uwierzytelniające przechowywane jako sekrety GitHub
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-              
+      
+      # 4. Krok: Budowanie i Pushing obrazu
       - uses: docker/build-push-action@v5
         with:
           context: .
           push: true
+          # Tworzenie tagu w formacie: user/repo:sha (np. illia/junior-devops-site:a1b2c3d4)
           tags: ${{ secrets.DOCKER_USERNAME }}/junior-devops-site:${{ steps.vars.outputs.tag }}
+          # Przekazanie SHA jako argumentu budowania (BUILD_COMMIT_SHA) do Dockerfile
           build-args: |
             BUILD_COMMIT_SHA=${{ steps.vars.outputs.tag }}
-          
-   
+      
+      # 5. Krok: Zdalne wdrożenie przez SSH (Deployment)
       - uses: appleboy/ssh-action@v1.0.1
         with:
+          # Parametry połączenia SSH przechowywane jako sekrety
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          
+          # SKRYPT WYKONYWANY NA ZDALNYM SERWERZE VPS
           script: |
-            # 1. Przejdź do katalogu
+            # 1. Przejdź do katalogu aplikacji na serwerze
             cd /opt/junior-devops-site
             
-            # 2. Tworzenie pliku docker-compose.yml przy użyciu nowej konfiguracji HTTPS
-            # ((WAŻNE: Nazwa pliku musi odpowiadać nazwie, której będziesz używać podczas  compose)
+            # 2. Dynamiczne tworzenie pliku docker-compose.yml
+            # Użycie zmiennej środowiskowej SHA (tag) gwarantuje, że użyty zostanie nowo zbudowany obraz.
             echo "
             version: '3.8'
             services:
@@ -53,6 +67,7 @@ jobs:
                 ports:
                   - \"80:80\"
                   - \"443:443\"
+                # Tomy do obsługi Certbota i plików HTML (persistent storage)
                 volumes:
                   - certbot-etc:/etc/letsencrypt
                   - certbot-web:/var/www/certbot
@@ -65,18 +80,30 @@ jobs:
                   - certbot-etc:/etc/letsencrypt
                   - certbot-web:/var/www/certbot
                   - ./html:/var/www/html
+                # Entrypoint dla Certbota, który cyklicznie odnawia certyfikaty (co 12h)
                 entrypoint: \"/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $!; done;'\"
                 
             volumes:
+              # Definicja nazwanych tomów (named volumes) dla trwałego przechowywania certyfikatów
               certbot-etc:
               certbot-web:
             " > docker-compose.yml
             
-            # 3. Zastosowanie
+            # 3. Zastosowanie zmian (Deployment)
+            # Ściągnij nowy obraz (zmieniony tag)
             docker compose -f docker-compose.yml pull
+            # Uruchom kontener (zastąpienie starego kontenera nowym bez przestojów)
             docker compose -f docker-compose.yml up -d --remove-orphans
+            
+            # Poczekaj chwilę na uruchomienie nowego kontenera
             sleep 15
+            
+            # 4. Finalna zmiana konfiguracji Nginx (po pomyślnym uruchomieniu)
             CONTAINER_ID=$(docker compose -f docker-compose.yml ps -q web)
+            # Skopiuj finalną konfigurację Nginx (z SSL) do działającego kontenera
             docker cp /opt/junior-devops-site/nginx.final.conf $CONTAINER_ID:/etc/nginx/conf.d/default.conf
+            # Przeładuj konfigurację Nginx, aby zastosować SSL (zero downtime)
             docker exec $CONTAINER_ID nginx -s reload
-            docker ps            
+            
+            # Wyświetlenie statusu kontenerów dla celów weryfikacji po deploymencie
+            docker ps

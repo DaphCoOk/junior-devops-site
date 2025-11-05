@@ -67,13 +67,13 @@ jobs:
                 
             volumes:
               certs:
-            " > docker-compose.https.yml
+            " > docker-compose.yml
             
             # 3. Zastosowanie
-            docker compose -f docker-compose.https.yml pull
-            docker compose -f docker-compose.https.yml up -d --remove-orphans
+            docker compose -f docker-compose.yml pull
+            docker compose -f docker-compose.yml up -d --remove-orphans
             sleep 15
-            CONTAINER_ID=$(docker compose -f docker-compose.https.yml ps -q web)
+            CONTAINER_ID=$(docker compose -f docker-compose.yml ps -q web)
             docker cp /opt/junior-devops-site/nginx.final.conf $CONTAINER_ID:/etc/nginx/conf.d/default.conf
             docker exec $CONTAINER_ID nginx -s reload
             docker ps            

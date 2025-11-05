@@ -54,19 +54,22 @@ jobs:
                   - \"80:80\"
                   - \"443:443\"
                 volumes:
-                  - certs:/etc/letsencrypt
+                  - certbot-etc:/etc/letsencrypt
+                  - certbot-web:/var/www/certbot
                   - ./html:/usr/share/nginx/html
                 restart: unless-stopped
               
               certbot:
                 image: certbot/certbot
                 volumes:
-                  - certs:/etc/letsencrypt
+                  - certbot-etc:/etc/letsencrypt
+                  - certbot-web:/var/www/certbot
                   - ./html:/var/www/html
                 entrypoint: \"/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $!; done;'\"
                 
             volumes:
-              certs:
+              certbot-etc:
+              certbot-web:
             " > docker-compose.yml
             
             # 3. Zastosowanie
